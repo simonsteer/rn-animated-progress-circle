@@ -2,6 +2,7 @@
 ### Props
 | PROP        | TYPE      | DESCRIPTION                                                          |
 |-------------|-----------|----------------------------------------------------------------------|
+| percent     | Number    | number between 0-1 which indicates the total progress                |
 | size        | Number    | sets the size of the progress circle                                 |
 | color       | String    | sets the color of the complete portion of the progress circle        |
 | shadowColor | String    | sets the color of the incomplete portion of the progress circle      |
