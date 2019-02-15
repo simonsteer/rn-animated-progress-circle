@@ -9,6 +9,7 @@ export default class ProgressCircle extends Component {
     shadowColor: 'white',
     children: null,
     style: {},
+    percent: 0,
   }
 
   constructor(props) {
