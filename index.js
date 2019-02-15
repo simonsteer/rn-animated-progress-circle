@@ -25,14 +25,6 @@ export default class ProgressCircle extends Component {
   }
 
   componentWillReceiveProps({ percent }) {
-    if (
-      percent === null ||
-      percent === undefined ||
-      this.props.percent === percent
-    ) {
-      return
-    }
-
     Animated.spring(this.state.animatedValue, {
       toValue: percent,
       speed: 4,
