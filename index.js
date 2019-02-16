@@ -3,46 +3,57 @@ import { View, Animated } from 'react-native'
 
 export default class ProgressCircle extends Component {
   static defaultProps = {
+    percent: 0,
     size: 64,
     thickness: 7,
     color: '#4c90ff',
-    shadowColor: 'white',
-    children: null,
+    unfilledColor: 'transparent',
     style: {},
-    percent: 0,
+    children: null,
+    animationMethod: null,
+    animationConfig: { duration: 200 },
+    shouldAnimateFirstValue: false,
+    onChange() {},
+    onChangeAnimationEnd() {},
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      animatedValue: new Animated.Value(props.percent),
-    }
-    this.circleStyle = {
-      width: props.size,
-      height: props.size,
-      borderRadius: props.size / 2,
+      isFirstAnimationComplete: false,
+      animatedValue: new Animated.Value(
+        props.shouldAnimateFirstValue ? 0 : props.percent
+      ),
     }
   }
 
   componentWillReceiveProps({ percent }) {
-    Animated.spring(this.state.animatedValue, {
-      toValue: percent,
-      speed: 4,
-      useNativeDriver: true,
-    }).start()
+    this.handleChange(percent)
   }
 
   render() {
-    const { thickness, shadowColor, children, style } = this.props
+    const { thickness, unfilledColor, children, style, size } = this.props
+    const styles = {
+      fullCircleStyle: {
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+      },
+      halfCircleContainerStyle: {
+        width: size / 2,
+        height: size,
+        overflow: 'hidden',
+      },
+    }
 
     return (
-      <View style={[{ flexDirection: 'row' }, this.circleStyle, style]}>
+      <View style={[{ flexDirection: 'row' }, styles.fullCircleStyle, style]}>
         <View
           style={[
-            this.circleStyle,
+            styles.fullCircleStyle,
             {
               borderWidth: thickness,
-              borderColor: shadowColor,
+              borderColor: unfilledColor,
               position: 'absolute',
               justifyContent: 'center',
               alignItems: 'center',
@@ -51,62 +62,87 @@ export default class ProgressCircle extends Component {
         >
           {children}
         </View>
-        {this.renderLeftHalfCircle()}
-        {this.renderRightHalfCircle()}
+        {this.renderHalfCircle({ styles })}
+        {this.renderHalfCircle({ isFlipped: true, styles })}
       </View>
     )
   }
 
-  renderLeftHalfCircle = () => {
-    const rotate = this.state.animatedValue.interpolate({
-      inputRange: [0.5, 1],
-      outputRange: ['0deg', '180deg'],
-      extrapolate: 'clamp',
-    })
+  ANIMATION_TYPES = ['timing', 'spring', 'bounce', 'decay']
 
-    return this.renderHalfCircle({ rotate })
+  get canAnimate() {
+    const { animationMethod } = this.props
+    return animationMethod && this.ANIMATION_TYPES.includes(animationMethod)
   }
 
-  renderRightHalfCircle = () => {
-    const rotate = this.state.animatedValue.interpolate({
-      inputRange: [0, 0.5],
-      outputRange: ['360deg', '180deg'],
-      extrapolate: 'clamp',
-    })
-
-    return this.renderHalfCircle({ rotate, isFlipped: true })
+  get animationMethod() {
+    return this.ANIMATION_TYPES.includes(this.props.animationMethod)
+      ? this.props.animationMethod
+      : 'timing'
   }
 
-  renderHalfCircle = ({ rotate, isFlipped = false } = {}) => {
+  handleChange = (percent = this.props.percent) => {
+    const {
+      props: { onChange, shouldAnimateFirstValue },
+      state: { isFirstAnimationComplete },
+    } = this
+
+    const isAnimatingFirstValue =
+      shouldAnimateFirstValue && !isFirstAnimationComplete
+
+    onChange()
+    if (this.canAnimate || isAnimatingFirstValue) {
+      this.animateChange(percent)
+      if (!isFirstAnimationComplete) {
+        this.setState({ isFirstAnimationComplete: true })
+      }
+    } else {
+      this.state.animatedValue.setValue(percent)
+    }
+  }
+
+  animateChange = percent =>
+    Animated[this.animationMethod](this.state.animatedValue, {
+      toValue: percent,
+      ...this.props.animationConfig,
+      useNativeDriver: true,
+    }).start(this.props.onChangeAnimationEnd)
+
+  renderHalfCircle = ({
+    isFlipped = false,
+    styles: { halfCircleContainerStyle = {}, fullCircleStyle = {} },
+  } = {}) => {
     const { size, color, thickness } = this.props
     return (
       <View
         style={{
-          overflow: 'hidden',
-          width: size / 2,
-          height: size,
+          ...halfCircleContainerStyle,
           transform: [{ scaleX: isFlipped ? -1 : 1 }],
         }}
       >
         <Animated.View
           style={{
-            width: size,
-            height: size,
+            ...fullCircleStyle,
             paddingLeft: size / 2,
-            transform: [{ rotate }],
             flexDirection: 'row',
+            overflow: 'hidden',
+            transform: [
+              {
+                rotate: this.state.animatedValue.interpolate({
+                  inputRange: isFlipped ? [0, 0.5] : [0.5, 1],
+                  outputRange: isFlipped
+                    ? ['360deg', '180deg']
+                    : ['0deg', '180deg'],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
           }}
         >
-          <View
-            style={{
-              width: size / 2,
-              height: size,
-              overflow: 'hidden',
-            }}
-          >
+          <View style={halfCircleContainerStyle}>
             <View
               style={[
-                this.circleStyle,
+                fullCircleStyle,
                 {
                   borderWidth: thickness,
                   borderColor: color,
