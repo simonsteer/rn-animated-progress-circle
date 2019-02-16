@@ -1,7 +1,7 @@
 import React from 'react'
 import ProgressCircle from '..'
 
-const AnimatedSpringProgressCircle = ({ percent }) => (
+const AnimatedSpring = ({ percent }) => (
   <ProgressCircle
     percent={percent}
     size={120}
@@ -17,4 +17,4 @@ const AnimatedSpringProgressCircle = ({ percent }) => (
   </ProgressCircle>
 )
 
-export default AnimatedSpringProgressCircle
+export default AnimatedSpring

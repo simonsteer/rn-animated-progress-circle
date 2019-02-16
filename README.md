@@ -17,12 +17,14 @@
 | onChange                | Function  | Callback function which gets called when the `percent` prop changes.                                                                                                                                                                                                                                                                                                           |
 | onChangeAnimationEnd    | Functin   | Callback function which gets called when the animation that occurs after the `percent` prop changes is complete.                                                                                                                                                                                                                                                               |
 
-### Examples (see examples folder for source code)
+### Examples
 
 #### Animated.spring to animate value changes with Text as children
 
 ![animated gif of progress circle changing to different percentages of completion](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/animated-spring.gif)
+[source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AnimatedSpring.js)
 
 #### Recreation of the native Android spinner
 
 ![animated gif of native android spinner](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/android-spinner.gif)
+[source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AndroidSpinner.js)
