@@ -21,10 +21,12 @@
 
 #### Animated.spring to animate value changes with Text as children
 
+[(source)](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AnimatedSpring.js)
+
 ![animated gif of progress circle changing to different percentages of completion](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/animated-spring.gif)
-[source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AnimatedSpring.js)
 
 #### Recreation of the native Android spinner
 
-![animated gif of native android spinner](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/android-spinner.gif)
 [source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AndroidSpinner.js)
+
+![animated gif of native android spinner](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/android-spinner.gif)
