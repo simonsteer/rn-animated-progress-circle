@@ -8,7 +8,7 @@ export default class AndroidSpinner extends Component {
   state = {
     shouldToggleValues: true,
     animatedValue: new Animated.Value(0),
-    percent: 0.05,
+    percent: 0.1,
   }
 
   componentDidMount() {
@@ -38,27 +38,26 @@ export default class AndroidSpinner extends Component {
           animationMethod="timing"
           animationConfig={{
             duration: ANIMATION_DURATION,
-            easing: Easing[this.state.shouldToggleValues ? 'in' : 'out'](
-              Easing.sin
-            ),
+            easing: Easing.linear,
           }}
         />
       </Animated.View>
     )
   }
 
-  rotateSpinner = () =>
+  rotateSpinner = () => {
+    this.setState({
+      percent: this.state.shouldToggleValues ? 0.9 : 0.1,
+      shouldToggleValues: !this.state.shouldToggleValues,
+    })
     Animated.timing(this.state.animatedValue, {
       toValue: 1,
       duration: ANIMATION_DURATION,
-      easing: Easing.out(Easing.sin),
+      easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => {
       this.state.animatedValue.setValue(0)
-      this.setState({
-        percent: this.state.shouldToggleValues ? 0.95 : 0.05,
-        shouldToggleValues: !this.state.shouldToggleValues,
-      })
       this.rotateSpinner()
     })
+  }
 }

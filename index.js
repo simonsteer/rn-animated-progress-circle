@@ -104,8 +104,8 @@ export default class ProgressCircle extends Component {
   animateChange = percent =>
     Animated[this.animationMethod](this.state.animatedValue, {
       toValue: percent,
-      ...this.props.animationConfig,
       useNativeDriver: true,
+      ...this.props.animationConfig,
     }).start(this.props.onChangeAnimationEnd)
 
   renderHalfCircle = ({
