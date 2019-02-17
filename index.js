@@ -3,7 +3,7 @@ import { View, Animated } from 'react-native'
 
 export default class ProgressCircle extends Component {
   static defaultProps = {
-    percent: 0,
+    value: 0,
     size: 64,
     thickness: 7,
     color: '#4c90ff',
@@ -21,14 +21,15 @@ export default class ProgressCircle extends Component {
     super(props)
     this.state = {
       isFirstAnimationComplete: false,
-      animatedValue: new Animated.Value(
-        props.shouldAnimateFirstValue ? 0 : props.percent
-      ),
+      animatedValue:
+        props.value.constructor.name === 'AnimatedValue'
+          ? null
+          : new Animated.Value(props.shouldAnimateFirstValue ? 0 : props.value),
     }
   }
 
-  componentWillReceiveProps({ percent }) {
-    this.handleChange(percent)
+  componentWillReceiveProps({ value }) {
+    this.handleChange(value)
   }
 
   render() {
@@ -71,7 +72,7 @@ export default class ProgressCircle extends Component {
 
   ANIMATION_TYPES = ['timing', 'spring', 'bounce', 'decay']
 
-  get canAnimate() {
+  get shouldHandleAnimationInternally() {
     const { animationMethod } = this.props
     return animationMethod && this.ANIMATION_TYPES.includes(animationMethod)
   }
@@ -82,29 +83,33 @@ export default class ProgressCircle extends Component {
       : 'timing'
   }
 
-  handleChange = (percent = this.props.percent) => {
+  handleChange = (value = this.props.value) => {
     const {
       props: { onChange, shouldAnimateFirstValue },
       state: { isFirstAnimationComplete },
     } = this
 
+    onChange()
+    if (value.constructor.name === 'AnimatedValue') {
+      return
+    }
+
     const isAnimatingFirstValue =
       shouldAnimateFirstValue && !isFirstAnimationComplete
 
-    onChange()
-    if (this.canAnimate || isAnimatingFirstValue) {
-      this.animateChange(percent)
+    if (this.shouldHandleAnimationInternally || isAnimatingFirstValue) {
+      this.animateChange(value)
       if (!isFirstAnimationComplete) {
         this.setState({ isFirstAnimationComplete: true })
       }
     } else {
-      this.state.animatedValue.setValue(percent)
+      this.state.animatedValue.setValue(value)
     }
   }
 
-  animateChange = percent =>
+  animateChange = value =>
     Animated[this.animationMethod](this.state.animatedValue, {
-      toValue: percent,
+      toValue: value,
       useNativeDriver: true,
       ...this.props.animationConfig,
     }).start(this.props.onChangeAnimationEnd)
@@ -113,7 +118,12 @@ export default class ProgressCircle extends Component {
     isFlipped = false,
     styles: { halfCircleContainerStyle = {}, fullCircleStyle = {} },
   } = {}) => {
-    const { size, color, thickness } = this.props
+    const { size, color, thickness, value } = this.props
+    const valueToInterpolate =
+      value.constructor.name === 'AnimatedValue'
+        ? value
+        : this.state.animatedValue
+
     return (
       <View
         pointerEvents="none"
@@ -130,7 +140,7 @@ export default class ProgressCircle extends Component {
             overflow: 'hidden',
             transform: [
               {
-                rotate: this.state.animatedValue.interpolate({
+                rotate: valueToInterpolate.interpolate({
                   inputRange: isFlipped ? [0, 0.5] : [0.5, 1],
                   outputRange: isFlipped
                     ? ['360deg', '180deg']
