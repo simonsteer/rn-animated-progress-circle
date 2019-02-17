@@ -49,6 +49,7 @@ export default class ProgressCircle extends Component {
     return (
       <View style={[{ flexDirection: 'row' }, styles.fullCircleStyle, style]}>
         <View
+          pointerEvents="box-none"
           style={[
             styles.fullCircleStyle,
             {
@@ -115,6 +116,7 @@ export default class ProgressCircle extends Component {
     const { size, color, thickness } = this.props
     return (
       <View
+        pointerEvents="none"
         style={{
           ...halfCircleContainerStyle,
           transform: [{ scaleX: isFlipped ? -1 : 1 }],
