@@ -32,41 +32,43 @@ export default class ProgressCircle extends Component {
   }
 
   render() {
-    const { thickness, unfilledColor, children, style, size } = this.props
-    const styles = {
-      fullCircleStyle: {
-        width: size,
-        height: size,
-        borderRadius: size / 2,
-      },
-      halfCircleContainerStyle: {
-        width: size / 2,
-        height: size,
-        overflow: 'hidden',
-      },
-    }
+    const { thickness, unfilledColor, children, style } = this.props
 
     return (
-      <View style={[{ flexDirection: 'row' }, styles.fullCircleStyle, style]}>
+      <View style={[{ flexDirection: 'row' }, this.fullCircleStyle, style]}>
         <View
           pointerEvents="box-none"
-          style={[
-            styles.fullCircleStyle,
-            {
-              borderWidth: thickness,
-              borderColor: unfilledColor,
-              position: 'absolute',
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-          ]}
+          style={{
+            ...this.fullCircleStyle,
+            borderWidth: thickness,
+            borderColor: unfilledColor,
+            position: 'absolute',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
           {children}
         </View>
-        {this.renderHalfCircle({ styles })}
-        {this.renderHalfCircle({ isFlipped: true, styles })}
+        {this.renderHalfCircle()}
+        {this.renderHalfCircle({ isFlipped: true })}
       </View>
     )
+  }
+
+  get fullCircleStyle() {
+    return {
+      width: this.props.size,
+      height: this.props.size,
+      borderRadius: this.props.size / 2,
+    }
+  }
+
+  get halfCircleContainerStyle() {
+    return {
+      width: this.props.size / 2,
+      height: this.props.size,
+      overflow: 'hidden',
+    }
   }
 
   ANIMATION_TYPES = ['timing', 'spring', 'bounce', 'decay']
@@ -96,10 +98,7 @@ export default class ProgressCircle extends Component {
       ...this.props.animationConfig,
     }).start(this.props.onChangeAnimationEnd)
 
-  renderHalfCircle = ({
-    isFlipped = false,
-    styles: { halfCircleContainerStyle = {}, fullCircleStyle = {} },
-  } = {}) => {
+  renderHalfCircle = ({ isFlipped = false } = {}) => {
     const { size, color, thickness, value } = this.props
     const valueToInterpolate =
       value.constructor.name === 'AnimatedValue'
@@ -110,13 +109,13 @@ export default class ProgressCircle extends Component {
       <View
         pointerEvents="none"
         style={{
-          ...halfCircleContainerStyle,
+          ...this.halfCircleContainerStyle,
           transform: [{ scaleX: isFlipped ? -1 : 1 }],
         }}
       >
         <Animated.View
           style={{
-            ...fullCircleStyle,
+            ...this.fullCircleStyle,
             paddingLeft: size / 2,
             flexDirection: 'row',
             overflow: 'hidden',
@@ -133,16 +132,14 @@ export default class ProgressCircle extends Component {
             ],
           }}
         >
-          <View style={halfCircleContainerStyle}>
+          <View style={this.halfCircleContainerStyle}>
             <View
-              style={[
-                fullCircleStyle,
-                {
-                  borderWidth: thickness,
-                  borderColor: color,
-                  transform: [{ translateX: -size / 2 }],
-                },
-              ]}
+              style={{
+                ...this.fullCircleStyle,
+                borderWidth: thickness,
+                borderColor: color,
+                transform: [{ translateX: -size / 2 }],
+              }}
             />
           </View>
         </Animated.View>
