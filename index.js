@@ -20,7 +20,6 @@ export default class ProgressCircle extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isFirstAnimationComplete: false,
       animatedValue:
         props.value.constructor.name === 'AnimatedValue'
           ? null
@@ -71,37 +70,20 @@ export default class ProgressCircle extends Component {
   }
 
   ANIMATION_TYPES = ['timing', 'spring', 'bounce', 'decay']
-
-  get shouldHandleAnimationInternally() {
-    const { animationMethod } = this.props
-    return animationMethod && this.ANIMATION_TYPES.includes(animationMethod)
-  }
-
   get animationMethod() {
     return this.ANIMATION_TYPES.includes(this.props.animationMethod)
       ? this.props.animationMethod
-      : 'timing'
+      : null
   }
 
   handleChange = (value = this.props.value) => {
-    const {
-      props: { onChange, shouldAnimateFirstValue },
-      state: { isFirstAnimationComplete },
-    } = this
-
-    onChange()
+    this.props.onChange()
     if (value.constructor.name === 'AnimatedValue') {
       return
     }
 
-    const isAnimatingFirstValue =
-      shouldAnimateFirstValue && !isFirstAnimationComplete
-
-    if (this.shouldHandleAnimationInternally || isAnimatingFirstValue) {
+    if (this.animationMethod) {
       this.animateChange(value)
-      if (!isFirstAnimationComplete) {
-        this.setState({ isFirstAnimationComplete: true })
-      }
     } else {
       this.state.animatedValue.setValue(value)
     }
