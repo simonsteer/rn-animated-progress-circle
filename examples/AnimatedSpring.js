@@ -2,9 +2,9 @@ import React from 'react'
 import { Text } from 'react-native'
 import ProgressCircle from '..'
 
-const AnimatedSpring = ({ percent }) => (
+const AnimatedSpring = ({ value }) => (
   <ProgressCircle
-    percent={percent}
+    value={value}
     size={120}
     thickness={4}
     color="#2b80ff"
