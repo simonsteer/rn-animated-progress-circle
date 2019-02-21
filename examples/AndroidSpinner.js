@@ -33,7 +33,6 @@ export default class AndroidSpinner extends Component {
           size={60}
           thickness={6}
           color="#7e42ed"
-          shouldAnimateFirstValue
           value={this.state.value}
           animationMethod="timing"
           animationConfig={{
