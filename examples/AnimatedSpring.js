@@ -1,4 +1,5 @@
 import React from 'react'
+import { Text } from 'react-native'
 import ProgressCircle from '..'
 
 const AnimatedSpring = ({ percent }) => (
