@@ -27,6 +27,12 @@ export default class ProgressCircle extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.shouldAnimateFirstValue) {
+      this.animateChange(this.props.value)
+    }
+  }
+
   componentWillReceiveProps({ value }) {
     this.handleChange(value)
   }
@@ -35,7 +41,7 @@ export default class ProgressCircle extends Component {
     const { thickness, unfilledColor, children, style } = this.props
 
     return (
-      <View style={[{ flexDirection: 'row' }, this.fullCircleStyle, style]}>
+      <View style={[this.fullCircleStyle, { flexDirection: 'row' }, style]}>
         <View
           pointerEvents="box-none"
           style={{
@@ -115,17 +121,15 @@ export default class ProgressCircle extends Component {
       >
         <Animated.View
           style={{
-            ...this.fullCircleStyle,
-            paddingLeft: size / 2,
-            flexDirection: 'row',
-            overflow: 'hidden',
+            width: size,
+            height: size,
             transform: [
               {
                 rotate: valueToInterpolate.interpolate({
                   inputRange: isFlipped ? [0, 0.5] : [0.5, 1],
                   outputRange: isFlipped
-                    ? ['360deg', '180deg']
-                    : ['0deg', '180deg'],
+                    ? ['180deg', '0deg']
+                    : ['-180deg', '0deg'],
                   extrapolate: 'clamp',
                 }),
               },
@@ -138,7 +142,6 @@ export default class ProgressCircle extends Component {
                 ...this.fullCircleStyle,
                 borderWidth: thickness,
                 borderColor: color,
-                transform: [{ translateX: -size / 2 }],
               }}
             />
           </View>

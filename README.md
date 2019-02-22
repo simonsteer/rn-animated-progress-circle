@@ -1,7 +1,5 @@
 # React Native Animated Progress Circle
 
-Please note that this component only works on iOS as of right now due to overflow: hidden issues on Android. Once react-native 0.59 has been released it should work cross-plaform [via this commit](https://github.com/facebook/react-native/commit/30044fd531c22c4c5e8f1ede206fa7c2c3fd3aa8).
-
 ### Props
 
 | PROP                    | TYPE                    | DESCRIPTION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -26,9 +24,3 @@ Please note that this component only works on iOS as of right now due to overflo
 ![animated gif of progress circle changing to different percentages of completion](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/animated-spring.gif)
 
 [source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AnimatedSpring.js)
-
-#### Recreation of the native Android spinner
-
-![animated gif of native android spinner](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/android-spinner.gif)
-
-[source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/AndroidSpinner.js)
