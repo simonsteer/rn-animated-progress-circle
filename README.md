@@ -1,6 +1,6 @@
 # React Native Animated Progress Circle
 
-PLEASE NOTE THAT THIS COMPONENT IS CURRENTLY ONLY WORKING ON iOS
+Please note that this component only works on iOS as of right now due to overflow: hidden issues on Android. Once react-native 0.59 has been released it should work cross-plaform [via this commit](https://github.com/facebook/react-native/commit/30044fd531c22c4c5e8f1ede206fa7c2c3fd3aa8).
 
 ### Props
 
