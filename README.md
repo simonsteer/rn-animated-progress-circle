@@ -1,6 +1,6 @@
 # React Native Animated Progress Circle
 
-Currently working on both Android and iOS on version 0.57.1 react-native. Use in other versions at your own peril.
+Currently working on both Android and iOS on version 0.57 of react-native and up [with the addition of support for overflow style property on Android](https://github.com/react-native-community/react-native-releases/blob/master/CHANGELOG.md#android-specific-additions-3)
 
 ### Props
 
