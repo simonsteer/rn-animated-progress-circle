@@ -1,5 +1,7 @@
 # React Native Animated Progress Circle
 
+Currently working on both Android and iOS on version 0.57.1 react-native. Use in other versions at your own peril.
+
 ### Props
 
 | PROP                    | TYPE                    | DESCRIPTION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
