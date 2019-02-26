@@ -28,7 +28,11 @@ export default class ProgressCircle extends Component {
   }
 
   componentDidMount() {
-    if (this.props.shouldAnimateFirstValue && this.animationMethod) {
+    if (
+      this.props.value.constructor.name !== 'AnimatedValue' &&
+      this.props.shouldAnimateFirstValue &&
+      this.animationMethod
+    ) {
       this.animateChange(this.props.value)
     }
   }
