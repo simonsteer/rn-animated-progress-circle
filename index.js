@@ -109,19 +109,22 @@ export default class ProgressCircle extends Component {
     }).start(this.props.onChangeAnimationEnd)
 
   renderHalfCircle = ({ isFlipped = false } = {}) => {
-    const { size, color, thickness, value } = this.props
+    const { size, color, thickness, value, style } = this.props
     const valueToInterpolate =
       value.constructor.name === 'AnimatedValue'
         ? value
         : this.state.animatedValue
 
     return (
-      <View
+      <Animated.View
         pointerEvents="none"
-        style={{
-          ...this.halfCircleContainerStyle,
-          transform: [{ scaleX: isFlipped ? -1 : 1 }],
-        }}
+        style={[
+          {
+            ...this.halfCircleContainerStyle,
+            transform: [{ scaleX: isFlipped ? -1 : 1 }],
+          },
+          style,
+        ]}
       >
         <Animated.View
           style={{
@@ -150,7 +153,7 @@ export default class ProgressCircle extends Component {
             />
           </View>
         </Animated.View>
-      </View>
+      </Animated.View>
     )
   }
 }
