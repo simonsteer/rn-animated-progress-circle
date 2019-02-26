@@ -28,7 +28,7 @@ export default class ProgressCircle extends Component {
   }
 
   componentDidMount() {
-    if (this.props.shouldAnimateFirstValue) {
+    if (this.props.shouldAnimateFirstValue && this.animationMethod) {
       this.animateChange(this.props.value)
     }
   }
@@ -77,7 +77,7 @@ export default class ProgressCircle extends Component {
     }
   }
 
-  ANIMATION_TYPES = ['timing', 'spring', 'bounce', 'decay']
+  ANIMATION_TYPES = ['timing', 'spring', 'decay']
   get animationMethod() {
     return this.ANIMATION_TYPES.includes(this.props.animationMethod)
       ? this.props.animationMethod
