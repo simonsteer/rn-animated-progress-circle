@@ -29,6 +29,6 @@ Currently working on both Android and iOS on version 0.57 of react-native and up
 
 #### A PieChart component that takes an array of objects as data: [{ color: String, value: Number }]
 
-![a colourful pie chart with six slices](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/pie-chart.gif)
+![a colourful pie chart with six slices](https://raw.githubusercontent.com/simonsteer/rn-animated-progress-circle/master/examples/pie-chart.png)
 
 [source](https://github.com/simonsteer/rn-animated-progress-circle/blob/master/examples/PieChart.js)
