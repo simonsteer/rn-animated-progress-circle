@@ -1,0 +1,32 @@
+{
+  "name": "@paulxuca/n-animated-progress-circle",
+  "version": "1.0.0",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.js",
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "repository": "https://github.com/paulxuca/rn-animated-progress-circle",
+  "author": "paulxuca <paulxuca@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-native": "^0.60.0"
+  },
+  "devDependencies": {
+    "@react-native-community/bob": "^0.6.1"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  },
+  "scripts": {
+    "prepare": "yarn bob build"
+  }
+}
