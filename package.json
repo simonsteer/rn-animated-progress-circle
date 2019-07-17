@@ -1,5 +1,5 @@
 {
-  "name": "@paulxuca/n-animated-progress-circle",
+  "name": "react-native-animated-progress-circle",
   "version": "1.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -8,8 +8,8 @@
     "lib/",
     "src/"
   ],
-  "repository": "https://github.com/paulxuca/rn-animated-progress-circle",
-  "author": "paulxuca <paulxuca@gmail.com>",
+  "repository": "https://github.com/simonsteer/rn-animated-progress-circle",
+  "author": "simonsteer <simonsteer@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": "^16.8.6",
