@@ -12,7 +12,7 @@ const AnimatedSpring = ({ value }) => (
     animationMethod="spring"
     animationConfig={{ speed: 4 }}
   >
-    <Text style={{ color: '#2b80ff', fontSize: 18, fontWeight: 'bold' }}>
+    <Text style={{ color: '#E82424', fontSize: 18, fontWeight: 'bold' }}>
       {`${Math.floor(percent * 100)}%`}
     </Text>
   </ProgressCircle>
